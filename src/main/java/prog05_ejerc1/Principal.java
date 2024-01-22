@@ -12,7 +12,7 @@ import java.util.Scanner;
  */
 public class Principal {
 
-    static Vehiculo vehiculo = null;
+    public static Vehiculo vehiculo = null;
     static Scanner scanner = new Scanner(System.in);
     static LocalDate fechaMatriculacion = null;
     
@@ -84,13 +84,12 @@ public class Principal {
         vehiculo = new Vehiculo();
 
         System.out.println("-----Ingrese los datos del vehículo:-----");
-        System.out.println("\n1. Ingrese la marca del vehículo:");
+        System.out.println("\n==== Ingrese la marca del vehículo: ====");
         String marca = scanner.nextLine();
         vehiculo.setMarca(marca);
-        scanner.nextLine();
         
         
-        System.out.println("\n2. Ingrese la matrícula del vehículo");
+        System.out.println("\n==== Ingrese la matrícula del vehículo ====");
         String matricula = scanner.nextLine();
         vehiculo.setMatricula(matricula);
         scanner.nextLine();
@@ -98,11 +97,11 @@ public class Principal {
 
         boolean kilometrosValidos = false;
         do{
-            System.out.println("\n3. Ingrese los kilómetros del vehículo");
+            System.out.println("\n ==== Ingrese los kilómetros del vehículo ====");
             double kilometros = scanner.nextDouble();
             
             try {
-                validadores.validadorKilometros(kilometros);
+                validadores.validadorKilometrosInicial(kilometros);
                 kilometrosValidos = true;
                 vehiculo.setKilometros(kilometros);
             } catch (IllegalArgumentException ex) {
@@ -114,18 +113,16 @@ public class Principal {
 
         boolean fechaValida = false;
         do {
-            System.out.println("\n4. Ingrese la fecha de matriculación del vehículo");
-            System.out.println("\n4.1 Ingrese el dia de matriculación del vehículo");
+            System.out.println("\n==== Ingrese la fecha de matriculación del vehículo ====\n");
+            System.out.println("\n==== Ingrese el dia de matriculación del vehículo ====");
             int dia = scanner.nextInt();
             scanner.nextLine();
             
-
-            System.out.println("\n4.2 Ingrese el mes de matriculación del vehículo");
+            System.out.println("\n==== Ingrese el mes de matriculación del vehículo ====");
             int mes = scanner.nextInt();
             scanner.nextLine();
             
-
-            System.out.println("\n4.3 Ingrese el año de matriculación del vehículo");
+            System.out.println("\n==== Ingrese el año de matriculación del vehículo ====");
             int anio = scanner.nextInt();
             scanner.nextLine();
             
@@ -141,22 +138,22 @@ public class Principal {
         } while (!fechaValida);
         
 
-        System.out.println("\n5. Ingrese la descripción del vehículo");
+        System.out.println("\n==== Ingrese la descripción del vehículo ====");
         String descripcion = scanner.nextLine();
         vehiculo.setDescripcion(descripcion);
         scanner.nextLine();
 
-        System.out.println("\n6. Ingrese el precio del vehículo");
+        System.out.println("\n==== Ingrese el precio del vehículo ====");
         double precio = scanner.nextDouble();
         vehiculo.setPrecio(precio);
         scanner.nextLine();
 
-        System.out.println("\n7. Ingrese el nombre del propietario del vehículo");
+        System.out.println("\n==== Ingrese el nombre del propietario del vehículo ====");
         String nombrePropietario = scanner.nextLine();
         vehiculo.setNombrePropietario(nombrePropietario);
         scanner.nextLine();
 
-        System.out.println("\n8. Ingrese el DNI del propietario del vehículo");
+        System.out.println("\n==== Ingrese el DNI del propietario del vehículo ====");
         String dniPropietario = scanner.nextLine();
         vehiculo.setDniPropietario(dniPropietario);
         scanner.nextLine();
@@ -166,11 +163,13 @@ public class Principal {
         System.out.println("\nLa matrícula del vehículo es: " + vehiculo.getMatricula());
         scanner.nextLine();
     }
+
     private static void verKilometros(){
         System.out.println("\nEl vehículo lleva recorridos: " + vehiculo.getKilometros() + " km");
         scanner.nextLine();
     }
-    private static void actualizaKilometros(){ //TODO: ACTUALIZAR EL VALIDADOR PARA QUE SI ES UN NUMERO ERRONEO NO SE ACTUALICE Y ME SALGA EL ERROR.
+
+    private static void actualizaKilometros(){ 
         boolean kilometrosValidos = false;
         do{
             System.out.println("\nUsted va a actualizar los kilómetros del vehículo.");
@@ -188,21 +187,25 @@ public class Principal {
         }while(!kilometrosValidos);
         
     }
+
     private static void verAntiguedad(){
         System.out.println("\nEl vehículo tiene " + vehiculo.getAnios() + " años");
         scanner.nextLine();
     }
+
     private static void verPropietario(){
         System.out.println("\nEl nombre del propietario es : " + vehiculo.getNombrePropietario());
         System.out.println("\nEl DNI del propietario es: " + vehiculo.getDniPropietario());
         scanner.nextLine();
     }
+
     private static void verDescripcion(){
         System.out.println("\nMatrícula del vehículo: " + vehiculo.getMatricula());
         System.out.println("\nKilómetros del vehículo: " + vehiculo.getKilometros() + " km");
         System.out.println("\nDescripción del Vehículo: " + vehiculo.getDescripcion() + ".");
         scanner.nextLine();
     }
+
     private static void verPrecio(){
         System.out.println("\nEl vehículo tiene un valor de " + vehiculo.getPrecio() + " $");
         scanner.nextLine();
