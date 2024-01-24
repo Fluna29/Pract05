@@ -1,13 +1,14 @@
 package prog05_ejerc1;
 
-import prog05_ejerc1_util.validadores;
-import prog05_ejerc1.Vehiculo;
 import java.time.LocalDate;
 import java.util.Scanner;
+
+import prog05_ejerc1_util.validadores;
 
 /**
  *  En esta clase vamos a inicializar nuestro programa.
  *  Incluyendo en el nuestra clase vehículo, haciendo import de él.
+ *  Además vamos a crear las funciones para crear el menú y crear las diferentes funcionalidades.
  *  @author Francisco Luna Raya
  */
 public class Principal {
@@ -26,40 +27,50 @@ public class Principal {
             menu();
             eleccion = scanner.nextInt();
             scanner.nextLine();
-            switch (eleccion) {
-                case 1:
-                    crearVehiculo();
-                    break;
-                case 2:
-                    verMatricula();
-                    break;
-                case 3:
-                    verKilometros();
-                    break;
-                case 4:
-                    actualizaKilometros();
-                    break;
-                case 5:
-                    verAntiguedad();
-                    break;
-                case 6:
-                    verPropietario();
-                    break;
-                case 7:
-                    verDescripcion();
-                    break;
-                case 8:
-                    verPrecio();
-                    break;
-                case 9:
-                    System.out.println("Hasta la próxima");
-                    break;
-                default:
-                    System.out.println("ERROR");
-                    break;
+            if (eleccion < 1 || eleccion > 9) {
+                System.out.println("\nDebe introducir un número acorde al menú (1-9)");
+                scanner.nextLine();
+                
+            }else{
+                if (eleccion != 1 && vehiculo == null){
+                    System.out.println("\nERROR, antes de realizar cualquier acción debe crear un vehículo.");
+                    scanner.nextLine();
+                }else{
+    
+                    switch (eleccion) {
+                        case 1:
+                            crearVehiculo();
+                            break;
+                        case 2:
+                            verMatricula();
+                            break;
+                        case 3:
+                            verKilometros();
+                            break;
+                        case 4:
+                            actualizaKilometros();
+                            break;
+                        case 5:
+                            verAntiguedad();
+                            break;
+                        case 6:
+                            verPropietario();
+                            break;
+                        case 7:
+                            verDescripcion();
+                            break;
+                        case 8:
+                            verPrecio();
+                            break;
+                        case 9:
+                            System.out.println("Hasta la próxima");
+                            break;
+                        default:
+                            System.out.println("ERROR");
+                            break;
+                    }}
             }
-            
-            
+                
         }while(eleccion != 9);
         
         //Cerramos el scanner creado puesto que ya no se va a usar más y así evitamos un leak de recursos.
@@ -67,6 +78,8 @@ public class Principal {
         
     }
 
+
+    //Esta función va a ser para llamar a nuestro menú.
     private static void menu(){
         System.out.println("\n-----MENU-----");
         System.out.println("1. Nuevo Vehículo");
@@ -80,6 +93,8 @@ public class Principal {
         System.out.println("9. Salir");
     }
 
+
+    //Esta función la vamos a usar para ingresar todos los datos necesarios para crear el objeto Vehiculo.
     private static void crearVehiculo() {
         vehiculo = new Vehiculo();
 
@@ -111,9 +126,9 @@ public class Principal {
             
         }while(!kilometrosValidos);
 
+
         boolean fechaValida = false;
         do {
-            System.out.println("\n==== Ingrese la fecha de matriculación del vehículo ====\n");
             System.out.println("\n==== Ingrese el dia de matriculación del vehículo ====");
             int dia = scanner.nextInt();
             scanner.nextLine();
@@ -131,7 +146,7 @@ public class Principal {
                 validadores.validadorFecha(fechaMatriculacion);
                 fechaValida = true;
                 vehiculo.setFechaMatriculacion(fechaMatriculacion);
-            } catch (Exception ex) {
+            } catch (IllegalArgumentException ex) {
                 System.out.println(ex.getMessage());
             }
             scanner.nextLine();
@@ -143,32 +158,51 @@ public class Principal {
         vehiculo.setDescripcion(descripcion);
         scanner.nextLine();
 
+
         System.out.println("\n==== Ingrese el precio del vehículo ====");
         double precio = scanner.nextDouble();
         vehiculo.setPrecio(precio);
         scanner.nextLine();
+
 
         System.out.println("\n==== Ingrese el nombre del propietario del vehículo ====");
         String nombrePropietario = scanner.nextLine();
         vehiculo.setNombrePropietario(nombrePropietario);
         scanner.nextLine();
 
-        System.out.println("\n==== Ingrese el DNI del propietario del vehículo ====");
-        String dniPropietario = scanner.nextLine();
-        vehiculo.setDniPropietario(dniPropietario);
-        scanner.nextLine();
+
+        boolean dniValido = false;
+        do{
+            System.out.println("\n==== Ingrese el DNI del propietario del vehículo ====");
+            String dniPropietario = scanner.nextLine();
+                try {
+                validadores.validadorDni(dniPropietario);
+                dniValido = true;
+                vehiculo.setDniPropietario(dniPropietario);
+                } catch (IllegalArgumentException ex) {
+                System.out.println(ex.getMessage());
+            }
+            scanner.nextLine();
+
+        }while(!dniValido);
     }
 
+
+    //Esta función nos retorna el valor de la matricula del vehiculo.
     private static void verMatricula(){
         System.out.println("\nLa matrícula del vehículo es: " + vehiculo.getMatricula());
         scanner.nextLine();
     }
 
+
+    //Esta función nos retorna el valor de los kilometros establecidos actuales actuales del vehiculo.
     private static void verKilometros(){
         System.out.println("\nEl vehículo lleva recorridos: " + vehiculo.getKilometros() + " km");
         scanner.nextLine();
     }
 
+
+    //Esta función la vamos a utilizar para actualizar los kilometros ya establecidos en nuestro objeto.
     private static void actualizaKilometros(){ 
         boolean kilometrosValidos = false;
         do{
@@ -188,17 +222,23 @@ public class Principal {
         
     }
 
+
+    //Esta función nos retorna la antigüedad del vehículo.
     private static void verAntiguedad(){
         System.out.println("\nEl vehículo tiene " + vehiculo.getAnios() + " años");
         scanner.nextLine();
     }
 
+    
+    //Esta función nos retorna el nombre del propietario y el DNI.
     private static void verPropietario(){
         System.out.println("\nEl nombre del propietario es : " + vehiculo.getNombrePropietario());
         System.out.println("\nEl DNI del propietario es: " + vehiculo.getDniPropietario());
         scanner.nextLine();
     }
 
+
+    //Esta función nos retorna la descripción del vehiculo, además de la matrícula y los kilómetros.
     private static void verDescripcion(){
         System.out.println("\nMatrícula del vehículo: " + vehiculo.getMatricula());
         System.out.println("\nKilómetros del vehículo: " + vehiculo.getKilometros() + " km");
@@ -206,6 +246,8 @@ public class Principal {
         scanner.nextLine();
     }
 
+
+    //Esta función nos retorna el precio del vehiculo objeto.
     private static void verPrecio(){
         System.out.println("\nEl vehículo tiene un valor de " + vehiculo.getPrecio() + " $");
         scanner.nextLine();
