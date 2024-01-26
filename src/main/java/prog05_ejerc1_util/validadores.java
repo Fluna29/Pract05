@@ -13,25 +13,31 @@ import prog05_ejerc1.Vehiculo;
  */
 public class validadores {
 
-    //Nos retorna un error en caso de que los kilometros introducidos sean superiores al anterior kilometraje introducido.
+    //Función para validar los kilómetros al actualizarlos. Nos retorna un error en caso de que los kilometros introducidos sean superiores al anterior kilometraje introducido.
     public static void validadorKilometros(double kilometros){
         if (kilometros <= Principal.vehiculo.getKilometros() ) {
             throw new IllegalArgumentException("\nEl número debe de ser superior al anterior kilometraje, el anterior kilometraje es : " + Principal.vehiculo.getKilometros());
             } 
         }
-        //Nos retorna un error en caso de que los kilometros iniciales sean superiores a 0.
+
+
+        //Función para validar los kilometros iniciales al crear el objeto. Nos retorna un error en caso de que los kilometros iniciales sean superiores a 0.
     public static void validadorKilometrosInicial(double kilometros){
         if (kilometros < 0) {
             throw new IllegalArgumentException("\nEl número de kilómetros debe de ser superior a 0.");
             } 
         }
-    //Nos retorna un error en caso de que la fecha introducida sea posterior a la actual.
+
+
+    //Función para validar la fecha. Nos retorna un error en caso de que la fecha introducida sea posterior a la actual.
     public static void validadorFecha(LocalDate fechaMatriculacion){
-        if(fechaMatriculacion.isAfter(LocalDate.now())){
+        if(fechaMatriculacion.isAfter(LocalDate.now()) || fechaMatriculacion.isEqual(LocalDate.now())){
             throw new IllegalArgumentException("\nLa fecha debe de ser anterior a la actual. La fecha actual es: " + LocalDate.now());
         }
     }
-     //Nos retorna un error en caso de que el DNI sea igual al regex que hemos realizado
+
+
+     //Función para validar el DNI. Nos retorna un error en caso de que el DNI sea igual al regex que hemos realizado
     public static void validadorDni(String dniPropietario){
 
         String dniMayus = dniPropietario.toUpperCase();

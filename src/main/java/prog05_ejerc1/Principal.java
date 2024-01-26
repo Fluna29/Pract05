@@ -16,15 +16,14 @@ public class Principal {
     public static Vehiculo vehiculo = null;
     static Scanner scanner = new Scanner(System.in);
     static LocalDate fechaMatriculacion = null;
-    
-    public static void main(String[] args){
-        
-        
-        int eleccion;
-        
 
+    //En esta función main vamos a introducir la funcionalidad de nuestro menú y al finalizar el menu, cierra el scanner para evitar una fuga de recursos.
+    public static void main(String[] args){
+
+        int eleccion;
+    
         do{
-            menu();
+            menuVisual();
             eleccion = scanner.nextInt();
             scanner.nextLine();
             if (eleccion < 1 || eleccion > 9) {
@@ -70,17 +69,13 @@ public class Principal {
                             break;
                     }}
             }
-                
         }while(eleccion != 9);
-        
-        //Cerramos el scanner creado puesto que ya no se va a usar más y así evitamos un leak de recursos.
         scanner.close();
-        
     }
+    
 
-
-    //Esta función va a ser para llamar a nuestro menú.
-    private static void menu(){
+    //Esta función sirve para llamar al menú visual.
+    private static void menuVisual(){
         System.out.println("\n-----MENU-----");
         System.out.println("1. Nuevo Vehículo");
         System.out.println("2. Ver Matrícula");
@@ -119,7 +114,7 @@ public class Principal {
                 validadores.validadorKilometrosInicial(kilometros);
                 kilometrosValidos = true;
                 vehiculo.setKilometros(kilometros);
-            } catch (IllegalArgumentException ex) {
+            } catch (IllegalArgumentException ex) {                                                                                                             
                 System.out.println(ex.getMessage());
             }
             scanner.nextLine();
@@ -223,14 +218,14 @@ public class Principal {
     }
 
 
-    //Esta función nos retorna la antigüedad del vehículo.
+    //Con esta función podemos ver la antigüedad del vehículo.
     private static void verAntiguedad(){
         System.out.println("\nEl vehículo tiene " + vehiculo.getAnios() + " años");
         scanner.nextLine();
     }
 
     
-    //Esta función nos retorna el nombre del propietario y el DNI.
+    //Esta función nos devuelve el nombre del propietario y el DNI.
     private static void verPropietario(){
         System.out.println("\nEl nombre del propietario es : " + vehiculo.getNombrePropietario());
         System.out.println("\nEl DNI del propietario es: " + vehiculo.getDniPropietario());
@@ -238,7 +233,7 @@ public class Principal {
     }
 
 
-    //Esta función nos retorna la descripción del vehiculo, además de la matrícula y los kilómetros.
+    //Esta función nos permite ver la descripción del vehiculo, además de la matrícula y los kilómetros.
     private static void verDescripcion(){
         System.out.println("\nMatrícula del vehículo: " + vehiculo.getMatricula());
         System.out.println("\nKilómetros del vehículo: " + vehiculo.getKilometros() + " km");
